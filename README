@@ -1,0 +1,5 @@
+MultiWordle
+-----------
+
+A clone of Wordle which allows many of the game's features to be configured via a configuration file.
+
