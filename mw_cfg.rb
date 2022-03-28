@@ -23,7 +23,7 @@ class Config
       :num_games              => 2,
 
       # DEBUG: Allow user to cheat by showing the word! Useful during debugging.
-      :is_allow_show_word     => true,
+      :is_allow_show_word     => false,
 
       # DEBUG: Show the configuration parameters
       :is_show_config         => false,

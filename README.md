@@ -52,5 +52,7 @@ Note that I have used '$' above to represent the Linux command
 line prompt. You should not type the '$' sign above.
 
 
+## Screenshot of the MultiWordle game
+
 ![Screenshot of MultiWordle game](/assets/images/multiwordle1a.png)
 
