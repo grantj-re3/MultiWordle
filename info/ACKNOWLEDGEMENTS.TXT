@@ -1,0 +1,8 @@
+
+Thanks to Josh Wardle for creating and developing the game of Wordle.
+https://github.com/powerlanguage
+
+Thanks to Associate Professor Keith Vertanen for making available
+his "Big English Word Lists" at https://www.keithv.com/software/wlist/
+I have used one of these lists for the multi-wordle word list.
+
