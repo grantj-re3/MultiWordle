@@ -111,7 +111,7 @@ class WordleTextUI
 
   ############################################################################
   def status_string(type=nil)
-    # Valid types = :normal, :heading :padding or :context. Nil implies :normal.
+    # Valid types = :normal, :heading, :padding or :context. Nil implies :normal.
     # The :context type will choose :normal or :padding depending on the state of @wordle.
 
     is_clue_status_pairs = @cfg.arg[:clue_status_format] == :clue_status_pairs

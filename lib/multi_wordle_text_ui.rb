@@ -99,7 +99,7 @@ class MultiWordleTextUI
 
   ############################################################################
   def keep_guess_count_for_completed_games
-    @games.each{|g| g.keep_guesses_done if g.correct}
+    @games.each{|g| g.keep_guesses_done if g.correct && !g.guesses_done}
   end
 
   ############################################################################
