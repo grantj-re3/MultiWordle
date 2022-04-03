@@ -80,6 +80,44 @@ class Config
       :clue_status_format     => :one_status,
 
     }
+
+    # @wordfiles allows you to specify:
+    # - one *default* wordlist file to be used for words of any length
+    #   (i.e. can be used when :num_chars above is set to 4, or 5, or 6,
+    #   or 7, or 8, ...)
+    #   * the key must be nil for the default wordlist
+    #   * the wordlist file must contain words of all lengths
+    # - you can optionally specify one wordlist file per word length
+    #   (i.e. :num_chars above) which overrides the default wordlist
+    #   for that particular word length
+    #   * the key shall be the length of the words which we are overriding
+    #     (e.g. 6)
+    #   * the wordlist file must contain words of corresponding length
+    #     (e.g. if the key is 6, the file must contain 6-letter words);
+    #     the file can optionally contain words of other lengths (i.e.
+    #     not 6-letters) but these words will be ignored
+    #
+    # Format:
+    #   NumChars => WordlistFilenameForNumChars,
+    #
+    # Format example:
+    #   6   => "wordlist_for_six_letters.txt",
+    #   7   => "wordlist_for_seven_letters.txt",
+    #   nil => "default_wordlist_for_all_other_word_lengths.txt",
+
+    @wordfiles = {
+      #5   => "wordsRealWordle_c5_w12972.txt",   # Too many infrequent words?
+      5   => "wordsRealWordle_c5_w2315.txt",    # Good wordlist for 5-letter words
+
+      # The default wordlist (mandatory)
+      #
+      # /usr/share/dict/words has too tech & non-English words. However, if you
+      # want to use it, symlink to it from the WordFilesDir (usually wordfiles dir)
+      # then uncomment the following line:
+      # nil => "words",
+      nil => "wlist_match10.txt",               # Too many names & non-English words
+    }
+
   end
 
 end

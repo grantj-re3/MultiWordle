@@ -46,7 +46,7 @@ class MultiWordleTextUI
         however there are only #{Wordle.words.length} unique words in the word-list!
         Quitting.
       EOF
-      exit 1
+      exit 21
     end
   end
 
@@ -194,10 +194,13 @@ class MultiWordleTextUI
 
   ############################################################################
   def self.multi_game
+    conf = Config.new
+    puts conf.to_s if conf.arg[:is_show_config]
+    conf = nil
+
     multi_ui = MultiWordleTextUI.new
     input = GuessInputTextUI.new(Wordle.words, multi_ui.cfg.arg[:is_allow_show_word])
 
-    puts multi_ui.uis.first.debug_config_s if multi_ui.cfg.arg[:is_show_config]
     puts multi_ui.brief_help
     multi_ui.uis.first.debug_show_column_position
     multi_ui.show_preprompt_heading

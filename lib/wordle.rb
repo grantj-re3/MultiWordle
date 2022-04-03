@@ -9,9 +9,6 @@ require "config"
 ### Wordle game
 ##############################################################################
 class Wordle
-  #WordListPath = "/usr/share/dict/words"          # Too many tech & non-English words
-  WordListPath = "#{ParentDir}/wlist_match10.txt" # Too many names & non-English words
-
   GetWordMaxCount = 10
   RANGE_AZ = 'A'..'Z'
 
@@ -48,19 +45,45 @@ class Wordle
   end
 
   ############################################################################
+  def get_wordlist_path
+    fname = @cfg.wordfiles[ @cfg.arg[:num_chars] ] # Get filename for N-letter words
+    if fname
+      puts "Using override wordlist file '#{fname}' for #{@cfg.arg[:num_chars]}-letter words"
+
+    else
+      fname = @cfg.wordfiles[nil]                  # Else get default filename
+      puts "Using default wordlist file '#{fname}' for #{@cfg.arg[:num_chars]}-letter words"
+    end
+    "#{WordFilesDir}/#{fname}"
+  end
+
+  ############################################################################
   def load_all_words
     return if @@words    
     word_regex = /^\w{#{@num_chars}}$/
     @@words = []
     line_count = 0
-    File.foreach(WordListPath){|line|
-      line_count += 1
-      word = line.strip.upcase
-      @@words << word if word_regex.match(word)
-    }
+
+    wordlist_path = get_wordlist_path
+    begin
+      File.foreach(wordlist_path){|line|
+        line_count += 1
+        word = line.strip.upcase
+        @@words << word if word_regex.match(word)
+      }
+
+    rescue => ex
+      puts "ERROR: #{ex}"
+      exit 11
+    end
+
     @@words.uniq!                     # Exclude repeated words
     puts "Loaded #{@@words.length} x #{@num_chars}-letter words (from word list of #{line_count})"
-    puts "The word list is located at #{WordListPath}"
+    puts "The word list is located at #{wordlist_path}"
+    if @@words.length < 1
+      puts "ERROR: Insufficient words to play the game"
+      exit 12
+    end
   end
 
   ############################################################################
@@ -77,7 +100,7 @@ class Wordle
       ERROR: After #{GetWordMaxCount} attempts, we could not find a random word from
       our word list which is not in the excluded-word-list! Quitting.
     EOF
-    exit 1
+    exit 13
   end
 
   ############################################################################

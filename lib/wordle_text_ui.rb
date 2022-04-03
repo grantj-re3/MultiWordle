@@ -32,13 +32,6 @@ class WordleTextUI
   end
 
   ############################################################################
-  def debug_config_s
-    a = [ "\nConfiguration parameters:\n" ]
-    @cfg.key_order.each{|k| a << "  %-24s = %-24s\n" % [k.inspect, @cfg.arg[k].inspect]}
-    a.join("")
-  end
-
-  ############################################################################
   def delim
     @cfg.arg[:delim]
   end

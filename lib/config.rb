@@ -5,19 +5,17 @@
 ##############################################################################
 ### Multi-game Wordle Configuration
 ##############################################################################
-# Extend the Config class (in a separate file, ConfigFilepath)
+# Extend the Config class (from separate file, ConfigFilepath)
 class Config
 
   ClueStatusLengths = [:long, :short]
   ClueStatusFormats = [:clue_status_pairs, :one_status, :no_status]
   StatusTypes       = [:clue_info, :guess_info]
 
-  attr_reader :arg, :key_order
+  attr_reader :arg, :key_order, :wordfiles
 
+  ############################################################################
   def initialize
-    user_config if Config.method_defined?(:user_config)
-    clean_user_config
-    validate_config
     @key_order = [
       :num_chars,
       :num_games,
@@ -36,9 +34,15 @@ class Config
       :is_show_config,
       :column_position_count,
     ]
+    user_config if Config.method_defined?(:user_config)
+
+    clean_user_args
+    validate_user_args
+    validate_user_wordfiles
   end
 
-  def clean_user_config
+  ############################################################################
+  def clean_user_args
     # Add defaults and override some invalid configs
     @arg ||= {}
     @arg[:num_chars] ||= 5
@@ -84,7 +88,8 @@ class Config
 
   end
 
-  def validate_config
+  ############################################################################
+  def validate_user_args
     error = false
     unless ClueStatusLengths.include?(@arg[:clue_length])
       error = true
@@ -111,9 +116,68 @@ class Config
     end
 
     if error
+      puts to_s
       puts "QUITTING!"
       exit 1
     end
+  end
+
+  ############################################################################
+  def validate_user_wordfiles
+    error = false
+    unless @wordfiles
+      error = true
+      puts <<-EOF.gsub(/^ {8}/, '')
+        CONFIGURATION ERROR:
+          @wordfiles is undefined or nil in the user config file.
+          It should be a Hash.
+
+      EOF
+    end
+
+    unless @wordfiles && @wordfiles[nil]
+      error = true
+      puts <<-EOF.gsub(/^ {8}/, '')
+        CONFIGURATION ERROR:
+          @wordfiles[nil] is undefined or nil in the user config file.
+          It should be a string, naming a file located in the folder
+          #{WordFilesDir}
+          containing the default wordlist.
+
+      EOF
+    end
+
+    # FIXME: Consider if we can validate the override filenames somehow.
+    # Keys must be nil or positive integers
+
+    if error
+      puts to_s
+      puts "QUITTING!"
+      exit 2
+    end
+  end
+
+  ############################################################################
+  def to_s
+    a = [ "\nConfiguration parameters (arg):\n" ]
+    @key_order.each{|k| a << "  %-24s => %-24s\n" % [k.inspect, @arg[k].inspect]}
+
+    a << [ "\nConfiguration parameters (wordfiles):\n" ]
+    fname_msg = @wordfiles && @wordfiles[nil] ?
+      @wordfiles[nil].inspect :
+      "Error: No file configured"
+    s = "Default wordlist file (key=nil)"
+    a << "  %-33s => %s\n" % [s, fname_msg]
+
+    if @wordfiles
+      @wordfiles.keys.sort{|a,b| a.to_s.to_i <=> b.to_s.to_i}.each{|k|
+        next if k.nil?
+        s = "%d-letter wordlist file (key=%d)" % [k, k]
+        a << "  %-33s => %s\n" % [s, @wordfiles[k].inspect]
+      }
+    end
+    a << "\n"
+    a.join("")
   end
 
 end
