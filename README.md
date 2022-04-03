@@ -31,10 +31,6 @@ You need to install ruby first (if not already installed). I imagine
 the program will work using any Ruby 2.x version. It has been tested
 using the following Ruby versions: 2.3.3, 2.5.1, 2.6.3 & 2.7.0.
 
-You need to install ruby first (if not already installed). The program
-has been tested under Ruby 2.3.3, but I imagine it will work under any
-Ruby 2.x version.
-
 
 ## To run
 
