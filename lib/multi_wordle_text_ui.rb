@@ -57,8 +57,10 @@ class MultiWordleTextUI
       @prompt_prepadding = uis.map{|ui|
         "%s%s%s" % [ui.clues_string(:padding), ui.pad_delim, ui.status_string(:padding)]
       }.join(uif.pad_section_delim) + uif.section_delim
+      i = 0
       @prompt_preheading = uis.map{|ui|
-        "%s%s%s%s" % [ui.clues_string(:heading), ui.delim, ui.status_string(:heading), ui.section_delim]
+        i += 1
+        "%s%s%s%s" % [ui.clues_string(:heading, i), ui.delim, ui.status_string(:heading), ui.section_delim]
       }.join("")
 
     else  # @cfg.arg[:clue_status_format] is :one_status or :no_status
@@ -66,7 +68,11 @@ class MultiWordleTextUI
       @prompt_prepadding << (@cfg.arg[:clue_status_format] == :one_status ?
         "%s%s%s" % [uif.pad_delim, uif.status_string(:padding), uif.section_delim] : uif.section_delim)
 
-      @prompt_preheading = uis.map{|ui| ui.clues_string(:heading)}.join(uif.section_delim)
+      i = 0
+      @prompt_preheading = uis.map{|ui|
+        i += 1
+        ui.clues_string(:heading, i)
+      }.join(uif.section_delim)
       @prompt_preheading << (@cfg.arg[:clue_status_format] == :one_status ?
         "%s%s%s" % [uif.delim, uif.status_string(:heading), uif.section_delim] : uif.section_delim)
     end

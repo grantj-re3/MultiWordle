@@ -71,18 +71,33 @@ class WordleTextUI
   end
 
   ############################################################################
-  def clues_string(type=nil)
+  def clues_string_heading(s_blank, pos=nil)
+    s_prefix = "Clue"
+    field_length = s_blank.length
+
+    if pos.nil? || @cfg.arg[:num_games] < 5
+      # Squash the s_prefix text into the available space
+      hdr = s_prefix[0...field_length]
+
+    else
+      # Don't bother to use s_prefix; only show (1 or 2 digit) field position
+      hdr = "#{pos}"
+      hdr = hdr[-1] if field_length == 1 && hdr.length > 1
+    end
+    s_blank.gsub(/^ {#{hdr.length}}/,  hdr)
+  end
+
+  ############################################################################
+  def clues_string(type=nil, pos=nil)
     # Valid types = :normal, :heading or :padding. Nil implies :normal.
 
     if type == :padding || type == :heading || @wordle.guesses_done
       s = " " * @pad_factor_clue * @wordle.num_chars
-      if @wordle.guesses_done
+      if @wordle.guesses_done || type == :padding
         return s
-      elsif type == :heading
-        heading_text = "Clue"[0...s.length]
-        return s.gsub(/^ {#{heading_text.length}}/,  heading_text)
-      else
-        return s
+
+      else    # type == :heading
+        return clues_string_heading(s, pos)
       end
     end
 
