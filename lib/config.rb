@@ -17,18 +17,19 @@ class Config
   ############################################################################
   def initialize
     @key_order = [
-      :num_chars,
       :num_games,
+      :num_chars,
       :max_guesses,
-
-      :delim,
-      :section_delim,
-      :word_prompt,
 
       :clue_length,
       :status_length,
       :status_type,
       :clue_status_format,
+
+      :delim,
+      :section_delim,
+      :word_prompt,
+      :is_pause_at_end_game,
 
       :is_allow_show_word,
       :is_show_config,
@@ -45,31 +46,15 @@ class Config
   def clean_user_args
     # Add defaults and override some invalid configs
     @arg ||= {}
+    # Number of simultaneous games to play. Must be 1, 2, 3 ...
+    @arg[:num_games]              ||= 1
+    @arg[:num_games] = 1 if @arg[:num_games] < 1        # Invalid to have less than 1 game
+
     @arg[:num_chars] ||= 5
 
     @arg[:max_guesses] ||= 6
     @arg[:max_guesses] = 99 if @arg[:max_guesses] > 99  # Text UI assumes 1 or 2 digits
     @arg[:max_guesses] = 1  if @arg[:max_guesses] < 1   # Script assumes 1 or more
-
-    # Number of simultaneous games to play. Must be 1, 2, 3 ...
-    @arg[:num_games]              ||= 1
-    @arg[:num_games] = 1 if @arg[:num_games] < 1        # Invalid to have less than 1 game
-
-    # DEBUG: Allow user to cheat by showing the word! Useful during debugging.
-    @arg[:is_allow_show_word]     ||= false
-
-    # DEBUG: Show the configuration parameters
-    @arg[:is_show_config]         ||= false
-
-    # DEBUG: Print lines which show column positions.
-    @arg[:column_position_count]  ||= 0
-
-    # Delimiter strings: Typically 1-3 characters
-    @arg[:delim]                  ||= ">"
-    @arg[:section_delim]          ||= "|"
-
-    # String to prompt the user to input the guessed word
-    @arg[:word_prompt]            ||= "Word? "
 
     # :long or :short
     @arg[:clue_length]            ||= :long
@@ -85,6 +70,25 @@ class Config
     #   you are only going to display one status section for all N-games
     # THEN the status-type must NOT be :clue_info
     @arg[:status_type] = :guess_info if @arg[:num_games] > 1 && @arg[:clue_status_format] == :one_status
+
+    # Delimiter strings: Typically 1-3 characters
+    @arg[:delim]                  ||= ">"
+    @arg[:section_delim]          ||= "|"
+
+    # String to prompt the user to input the guessed word
+    @arg[:word_prompt]            ||= "Word? "
+
+    # If set to true, this option pauses at the end of the game.
+    @arg[:is_pause_at_end_game]   ||= false
+
+    # DEBUG: Allow user to cheat by showing the word! Useful during debugging.
+    @arg[:is_allow_show_word]     ||= false
+
+    # DEBUG: Show the configuration parameters
+    @arg[:is_show_config]         ||= false
+
+    # DEBUG: Print lines which show column positions.
+    @arg[:column_position_count]  ||= 0
 
   end
 

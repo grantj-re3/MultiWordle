@@ -9,12 +9,6 @@ class Config
 
   def user_config
     @arg = {
-      # Number of letters in the target word
-      :num_chars              => 5,
-
-      # Maximum number of guesses permitted
-      :max_guesses            => 25,
-
       # Number of simultaneous games to play. Must be 1, 2, 3 ...
       # The maximum number depends on:
       # - the width of your text console (xterm) & font size/type
@@ -22,27 +16,11 @@ class Config
       #   length, etc. in this file
       :num_games              => 2,
 
-      # DEBUG: Allow user to cheat by showing the word! Useful during debugging.
-      :is_allow_show_word     => false,
+      # Number of letters in the target word
+      :num_chars              => 5,
 
-      # DEBUG: Show the configuration parameters
-      :is_show_config         => false,
-
-      # DEBUG: Print lines which show column positions. This value specifies how
-      # many column positions to show (usually 80 or more). Do not print debug
-      # lines if value is 0. This debug feature is useful when configuring the
-      # Text User Interface to see how many characters will fit on your xterm
-      # (or console).
-      ##:column_position_count  => 168,
-      ##:column_position_count  => 79,
-      :column_position_count  => 0,
-
-      # Delimiter strings: Typically 1-3 characters
-      :delim                  => ">",
-      :section_delim          => "|",
-
-      # String to prompt the user to input the guessed word
-      :word_prompt            => " Word? ",
+      # Maximum number of guesses permitted
+      :max_guesses            => 25,
 
       # :short = show the clue/status character only
       # :long  = same as :short but add a space to the right of each clue/status character
@@ -53,6 +31,12 @@ class Config
       #   configuring the game for 4 target words).
       :clue_length            => :long,
       :status_length          => :short,
+
+      # Examples of clue-status formats on the display:
+      # - :clue_status_pairs = clue1|status1 | clue2|status2 | clue3|status3
+      # - :one_status        = clue1|clue2|clue3 | status
+      # - :no_status         = clue1|clue2|clue3
+      :clue_status_format     => :one_status,
 
       # Status gives you aggregated information about the whole game.
       # - :clue_info gives colour coded information about all the clues so
@@ -73,11 +57,32 @@ class Config
       # :guess_info or :clue_info
       :status_type            => :clue_info,
 
-      # Examples of clue-status formats on the display:
-      # - :clue_status_pairs = clue1|status1 | clue2|status2 | clue3|status3
-      # - :one_status        = clue1|clue2|clue3 | status
-      # - :no_status         = clue1|clue2|clue3
-      :clue_status_format     => :one_status,
+      # Delimiter strings: Typically 1-3 characters
+      :delim                  => ">",
+      :section_delim          => "|",
+
+      # String to prompt the user to input the guessed word
+      :word_prompt            => " Word? ",
+
+      # If invoked via a file manager, the xterm usually vanishes when the
+      # script exits. If set to true, this option pauses at the end of the
+      # game, allowing the score, etc. to remain visible.
+      :is_pause_at_end_game   => false,
+
+      # DEBUG: Allow user to cheat by showing the word! Useful during debugging.
+      :is_allow_show_word     => false,
+
+      # DEBUG: Show the configuration parameters
+      :is_show_config         => false,
+
+      # DEBUG: Print lines which show column positions. This value specifies how
+      # many column positions to show (usually 80 or more). Do not print debug
+      # lines if value is 0. This debug feature is useful when configuring the
+      # Text User Interface to see how many characters will fit on your xterm
+      # (or console).
+      ##:column_position_count  => 168,
+      ##:column_position_count  => 79,
+      :column_position_count  => 0,
 
     }
 

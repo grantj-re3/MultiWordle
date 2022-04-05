@@ -200,6 +200,7 @@ class MultiWordleTextUI
 
   ############################################################################
   def self.multi_game
+    puts
     conf = Config.new
     puts conf.to_s if conf.arg[:is_show_config]
     conf = nil
@@ -232,7 +233,10 @@ class MultiWordleTextUI
       multi_ui.keep_guess_count_for_completed_games
       break if multi_ui.process_game_end == :break
     end
-
+    if multi_ui.cfg.arg[:is_pause_at_end_game]
+      printf "\nPress the Enter key to finish..."
+      STDIN.readline
+    end
   end
 
 end
