@@ -9,14 +9,26 @@ require "wordle"
 ### Wordle Text-User-Interface
 ##############################################################################
 class WordleTextUI
+  # https://docs.microsoft.com/en-us/windows/console/console-virtual-terminal-sequences
   # https://man7.org/linux/man-pages/man4/console_codes.4.html
   # See "ECMA-48 Select Graphic Rendition" section
-  ATTR_BG_GREEN       = "\033[30;102m"
-  ATTR_BG_YELLOW      = "\033[30;103m"
-  ATTR_RESET          = "\033[0m"
+  ATTR_FG_BLACK_BG_BRIGHT_RED         = "\033[30;101m"
+  ATTR_FG_BLACK_BG_BRIGHT_GREEN       = "\033[30;102m"  # Ok
+  ATTR_FG_BLACK_BG_BRIGHT_YELLOW      = "\033[30;103m"  # Ok
+  ATTR_FG_BLACK_BG_BRIGHT_BLUE        = "\033[30;104m"  # Ok
+  ATTR_FG_BLACK_BG_BRIGHT_MAGENTA     = "\033[30;105m"
+  ATTR_FG_BLACK_BG_BRIGHT_CYAN        = "\033[30;106m"  # Ok
 
-  @@clue_ok_location = ATTR_BG_GREEN
-  @@clue_ok_letter   = ATTR_BG_YELLOW
+  ATTR_FG_BLACK_BG_RED                = "\033[30;41m"
+  ATTR_FG_BLACK_BG_GREEN              = "\033[30;42m"   # Ok
+  ATTR_FG_BLACK_BG_YELLOW             = "\033[30;43m"   # Ok; BROWN?
+  ATTR_FG_BLACK_BG_BLUE               = "\033[30;44m"
+  ATTR_FG_BLACK_BG_MAGENTA            = "\033[30;45m"
+  ATTR_FG_BLACK_BG_CYAN               = "\033[30;46m"   # Ok
+  ATTR_RESET                          = "\033[0m"
+
+  @@clue_ok_location = ATTR_FG_BLACK_BG_BRIGHT_GREEN
+  @@clue_ok_letter   = ATTR_FG_BLACK_BG_YELLOW
   @@clue_no_info     = ATTR_RESET       # Default setting
 
   RANGE_AZ = Wordle::RANGE_AZ
