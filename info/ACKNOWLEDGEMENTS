@@ -1,0 +1,26 @@
+
+Thanks to Josh Wardle for creating and developing the game of Wordle.
+https://github.com/powerlanguage
+
+
+Word lists
+
+1/ Thanks to Associate Professor Keith Vertanen for making available
+   his "Big English Word Lists" at https://www.keithv.com/software/wlist/
+   I have used one of these lists for the multi-wordle word list.
+
+2/ Original Wordle word lists were copied from
+   https://github.com/Kinkelin/WordleCompetition. In particular:
+   - https://github.com/Kinkelin/WordleCompetition/blob/main/data/official/shuffled_real_wordles.txt
+   - https://github.com/Kinkelin/WordleCompetition/blob/main/data/official/combined_wordlist.txt
+
+   I have not altered the content but have renamed files to wordsRealWordle_c5_w2315.txt and
+   wordsRealWordle_c5_w12972.txt respectively.
+
+   This repository has the Attribution-ShareAlike 3.0 Unported licence
+   https://creativecommons.org/licenses/by-sa/3.0/ however I suspect
+   that the licence covering these 2 word lists were whatever was
+   applicable to the original Wordle repository.
+
+   These 2 files are also available from several other locations on the internet.
+
