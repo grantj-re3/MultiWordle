@@ -93,7 +93,8 @@ class WordleTextUI
 
     else
       # Don't bother to use s_prefix; only show (1 or 2 digit) field position
-      hdr = "#{pos}"
+      leading_spaces = " " * ((1 + field_length - pos.to_s.length) / 2)
+      hdr = "#{leading_spaces}#{pos}"
       hdr = hdr[-1] if field_length == 1 && hdr.length > 1
     end
     s_blank.gsub(/^ {#{hdr.length}}/,  hdr)
